@@ -1,35 +1,25 @@
 import Backbone from 'backbone';
-import $ from 'jquery';
 
-import HeaderView from './header/header.js';
+import SidebarView from './sidebar/sidebar.js';
 import ContainerView from './container/main.js';
 
+
 export default class MainView extends Backbone.View {
-
-  get id() {
-    return 'shobhit';
-  }
-
-  get events() {
-    return {
-      'click [data-module]': 'hanldeModule'
-    };
-  }
 
   constructor(options) {
     super(options);
 
-    this.delegateEvents();
+    this.listenTo(this.model, 'change', this.render);
   }
 
   render() {
     this.$el.empty().append(`
-      <div class="header"></div>
+      <div class="sidebar"></div>
       <div class="container"></div>
     `);
 
-    this.headerView = new HeaderView({
-      el: this.$('.header'),
+    this.sidebarView = new SidebarView({
+      el: this.$('.sidebar'),
       model: this.model
     }).render();
 
@@ -39,15 +29,6 @@ export default class MainView extends Backbone.View {
     }).render();
 
     return this;
-  }
-
-  hanldeModule(e) {
-    console.debug('main', 'hanldeModule', e);
-    var module = $(e.currentTarget).attr('data-module');
-
-    this.model.set({
-      module: module
-    });
   }
 
 }

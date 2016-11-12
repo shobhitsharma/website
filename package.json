@@ -12,7 +12,9 @@
     "test": "mocha --recursive",
     "prestart": "npm install && gulp build",
     "start": "node ./bin/www",
-    "clean": "rimraf dist/{css/*,js/*,images/*}"
+    "clean": "rimraf dist/{css/*,js/*,images/*}",
+    "develop": "npm install && gulp",
+    "build": "NODE_ENV=production gulp build"
   },
   "dependencies": {
     "express": "^4.14.0",

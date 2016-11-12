@@ -1,7 +1,11 @@
 import Backbone from 'backbone';
-import Template from './header.hbs';
+import Template from './projects.hbs';
 
-export default class HeaderView extends Backbone.View {
+export default class ProjectsView extends Backbone.View {
+
+  get className() {
+    return 'projects';
+  }
 
   constructor(options) {
     super(options);

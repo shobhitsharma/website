@@ -2,7 +2,6 @@
 
 import fs from 'fs';
 import url from 'url';
-import settings from './config.js';
 import gulp from 'gulp';
 import gulpif from 'gulp-if';
 import sourcemaps from 'gulp-sourcemaps';
@@ -20,12 +19,13 @@ import shell from 'gulp-shell';
 import browserSync from 'browser-sync';
 import sequence from 'run-sequence';
 import history from 'connect-history-api-fallback';
+import settings from './settings.js';
 
 const config = {
-  PRODUCTION: true, // Production mode is disabled when running default task (dev mode)
+  PRODUCTION: settings.production, // Production mode is disabled when running default task (dev mode)
   PORT: settings.port || 8080, // Development server port
   SRC_DIR: 'public/', // Relative paths to sources and output directories
-  BUILD_DIR: 'dist/',
+  BUILD_DIR: settings.ui.buildDir || 'dist/',
   src: function (path) {
     return this.SRC_DIR + path;
   },
@@ -103,15 +103,6 @@ gulp.task('html', function () {
 });
 
 /**
- * $ gulp dev
- *
- * Sets NODE_ENV variable
- */
-gulp.task('dev', function () {
-  config.PRODUCTION = false;
-});
-
-/**
  * $ gulp update
  *
  * Pulls latest commit and install dependencies
@@ -184,4 +175,4 @@ gulp.task('deploy', function (done) {
  *
  * Default task runner and watchman
  */
-gulp.task('default', ['dev', 'server']);
+gulp.task('default', ['server']);

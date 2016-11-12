@@ -5,40 +5,29 @@ export default class Router extends Backbone.Router {
   get routes() {
     return {
       '(/)': 'default',
-      'home': 'home',
-      'developers': 'developers',
-      'pricing': 'pricing',
-      'registration': 'registration',
+      'blog(/)': 'blog',
+      'blog/:postId': 'blog',
+      'projects(/)(/:project)': 'projects',
       '*error': 'error'
     };
   }
 
-  initialize() {
-    // TODO: not yet implemented
-  }
+  initialize() {}
 
   default (path = '') {
-    // TODO: not yet implemented
+    console.debug('router', 'index');
   }
 
-  home() {
-    console.log('Docs Module')
+  blog() {
+    console.debug('router', 'blog');
   }
 
-  developers() {
-    console.log('developers Module')
-  }
-
-  pricing() {
-    console.log('pricing Module')
-  }
-
-  registration() {
-    console.log('registration Module')
+  projects() {
+    console.debug('router', 'projects');
   }
 
   error() {
-    console.log('Error')
+    console.debug('router', 'error');
   }
 
 }

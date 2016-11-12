@@ -5,21 +5,14 @@
 To get started and setup for development environment:
 
 ```shell
-# Install basic dependencies
-$ npm install
-
-# Watches changes in `public` and reloads through browserify
-$ gulp
+$ npm start # Install basic dependencies and express starter
+$ npm run develop # UI Development and Browserify instance
 ```
 
 To build a minified version of the application (production mode) simply run:
 
 ```shell
-# Express implementation
-$ npm start
-
-# Minifies and Creates `dist`
-$ gulp build
+$ npm run build # Minifies and creates `dist` for ship
 ```
 
 ### Testing

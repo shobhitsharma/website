@@ -11,9 +11,9 @@ var bodyParser = require('body-parser');
 var Router = require('./lib').Router;
 
 var app = express();
-var config = process.env.CONFIG || path.join(__dirname, 'config.js');
+var settings = process.env.SETTINGS || path.join(__dirname, 'settings.js');
 
-app.set('config', config);
+app.set('settings', settings);
 app.set('views', path.join(__dirname, 'public/views'));
 app.engine('.hbs', handlebars({
   defaultLayout: 'layout',
@@ -32,7 +32,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(cookieParser());
 
-app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, settings.ui.buildDir)));
 app.use('/', new Router(app));
 
 // Application settings

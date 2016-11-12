@@ -1,7 +1,11 @@
 import Backbone from 'backbone';
-import Template from './products.hbs';
+import Template from './blog.hbs';
 
-export default class ProductsView extends Backbone.View {
+export default class BlogView extends Backbone.View {
+
+  get className() {
+    return 'blog';
+  }
 
   constructor(options) {
     super(options);

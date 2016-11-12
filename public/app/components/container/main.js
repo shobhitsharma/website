@@ -1,8 +1,8 @@
 import Backbone from 'backbone';
 
-import SidebarView from './sidebar/sidebar.js';
-import ContentView from './content/content.js';
-
+import ProjectsView from './projects/projects.js';
+import BlogView from './blog/blog.js';
+import ErrorView from './error/error.js';
 
 export default class ContainerView extends Backbone.View {
 
@@ -13,17 +13,9 @@ export default class ContainerView extends Backbone.View {
   }
 
   render() {
-    this.$el.empty().append(`
-      <div class="sidebar"></div>
-      <div class="content"></div>
-    `);
+    this.$el.empty().append(`<div class="content"></div>`);
 
-    this.sidebarView = new SidebarView({
-      el: this.$('.sidebar'),
-      model: this.model
-    }).render();
-
-    this.contentView = new ContentView({
+    this.view = new ProjectsView({
       el: this.$('.content'),
       model: this.model
     }).render();

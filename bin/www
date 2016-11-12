@@ -15,13 +15,13 @@ var package_json = require('../package.json');
 var debug = require('debug')('cf-brandbeat:server');
 var http = require('http');
 
-var config = require(app.get('config'));
+var settings = require(app.get('settings'));
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(config.port || process.env.PORT || '3000');
+var port = normalizePort(settings.port || process.env.PORT || '3000');
 
 /**
  * Setting up port.
@@ -100,6 +100,5 @@ function onListening() {
   var bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
 
   debug('Listening on' + bind);
-  console.log('Shobhit Source v' + version + ' ' + environment +
-    ' is listening at port:%s', addr.port);
+  console.log('Website server v' + version + ' ' + environment + ' is listening at port:%s', addr.port);
 }
