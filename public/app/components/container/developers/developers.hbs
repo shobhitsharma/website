@@ -1,0 +1,137 @@
+<section id="examples">
+  <h1>Examples</h1>
+  <p>An introduction Presentation with a small example can be found at <a href="https://speakerdeck.com/rottmann/api-documentation"
+      target="_blank" title="Introduction with a small example">speakerdeck.com</a>.</p>
+  <article id="example-basic">
+    <h2>Basic</h2>
+    <p>In this basic example we have a small project file and an apidoc.json.</p>
+    <p><a href="example_basic/">View example output</a></p>
+    <p><br></p>
+    <p><a href="source/example_basic/apidoc.json">apidoc.json</a></p>
+    <pre><code>{
+  "name": "example",
+  "version": "0.1.0",
+  "description": "A basic apiDoc example"
+}</code></pre>
+    <p>From <code>apidoc.json</code> apiDoc get the name, version and description of your project.<br> The file is <code>optional</code>      (it depend on your template if the data is required).</p>
+    <p><br></p>
+    <p><a href="source/example_basic/example.js">example.js</a></p>
+    <pre><code>/**
+ * <code class="important">@api {get} /user/:id Request User information</code> * <code class="important">@apiName GetUser</code>      * <code class="important">@apiGroup User</code> * * @apiParam {Number} id Users unique ID. * * @apiSuccess {String}
+      firstname Firstname of the User. * @apiSuccess {String} lastname Lastname of the User. * * @apiSuccessExample Success-Response:
+      * HTTP/1.1 200 OK * { * "firstname": "John", * "lastname": "Doe" * } * * @apiError UserNotFound The <code>id</code>      of the User was not found. * * @apiErrorExample Error-Response: * HTTP/1.1 404 Not Found * { * "error": "UserNotFound"
+      * } */
+      </code>
+    </pre>
+    <p>A documentation block starts with <code>/**</code> and end with <code>*/</code>.</p>
+    <p>This example describes a <code>GET</code> Method to request the User Information by the users <code>id</code>.</p>
+    <p><code>@api {get} /user/:id Request User information</code> is required, without <code>@api</code> apiDoc ignores a documentation
+      block.</p>
+    <p><code>@apiName</code> is a <code>unique</code> name and should always be used.<br> Format: <i>method</i> + <i>path</i>      (e.g. Get + User)</p>
+    <p><code>@apiGroup</code> should always be used, under that name will this method be grouped.</p>
+    <p>All other fields are optional, look at their description under <a href="#params">apiDoc-Params</a>.</p>
+  </article>
+  <!-- ============================================================ -->
+  <article id="example-inherit">
+    <h2>Inherit</h2>
+    <p>Inherit mean, that you can define parts of your documentation that shall be used many times.</p>
+    <p><a href="example_inherit/">View example output</a></p>
+    <p><br></p>
+    <p><a href="source/example_inherit/apidoc.json">apidoc.json</a></p>
+    <pre><code>{
+  "name": "example-inherit",
+  "version": "0.1.0",
+  "description": "apiDoc inherit example"
+}</code></pre>
+    <p><br></p>
+    <p><a href="source/example_inherit/example.js">example.js</a></p>
+    <pre><code>/**
+ * <code class="important">@apiDefine UserNotFoundError</code> * * @apiError UserNotFound The <code>id</code> of the User
+      was not found. * * @apiErrorExample Error-Response: * HTTP/1.1 404 Not Found * { * "error": "UserNotFound" * } */ /**
+      * @api {get} /user/:id Request User information * @apiName GetUser * @apiGroup User * * @apiParam {Number} id Users
+      unique ID. * * @apiSuccess {String} firstname Firstname of the User. * @apiSuccess {String} lastname Lastname of the
+      User. * * @apiSuccessExample Success-Response: * HTTP/1.1 200 OK * { * "firstname": "John", * "lastname": "Doe" * }
+      * * <code class="important">@apiUse UserNotFoundError</code> */ /** * @api {put} /user/ Modify User information * @apiName
+      PutUser * @apiGroup User * * @apiParam {Number} id Users unique ID. * @apiParam {String} [firstname] Firstname of the
+      User. * @apiParam {String} [lastname] Lastname of the User. * * @apiSuccessExample Success-Response: * HTTP/1.1 200
+      OK * * <code class="important">@apiUse UserNotFoundError</code> */
+      </code>
+    </pre>
+    <p>
+      In this case a block named <code>UserNotFoundError</code> is defined with <code>@apiDefine</code>.<br> That block could
+      be used many times with <code>@apiUse UserNotFoundError</code>.
+    </p>
+    <p>In the generated output, both methods <code>GET and PUT</code> will have the complete UserNotFoundError documentation.</p>
+    <p><br></p>
+    <p>
+      Inherit define commands is <code>apiDefine</code>.<br> Use name is <code>apiUse</code>.
+      <code>apiGroup</code> and <code>apiPermission</code> are use commands to, but in their context the not inherit parameters,
+      only title and description (in combination with apiVersion).
+    </p>
+    <p><strong>Inheritation only works with 1 parent</strong>, more levels would make the inline code unreadable and changes
+      really complex.</p>
+  </article>
+  <!-- ============================================================ -->
+  <article id="example-versioning">
+    <h2>Versioning</h2>
+    <p>Nice feature is the keeping of previous defined documentation blocks. That makes it possible to compare a methods version
+      with its predecessor. Frontend Developer can thus simply see what have changed and modify their code.</p>
+    <p><a href="example_versioning/">View example output</a></p>
+    <p>In the example, click top right on select box (the main version) and select <code>Compare all with predecessor</code>.</p>
+    <ul>
+      <li>The main navigation mark all changed methods with a green bar.</li>
+      <li>Each method show the difference to its predecessor.</li>
+      <li>Green marks contents that were added (in this case title text changed and field <code>registered</code> was added).</li>
+      <li>Red marks contents that were removed.</li>
+    </ul>
+    <p>You can change the main version (top right) to a previous version and compare older methods with their predecessor.</p>
+    <p><br></p>
+    <p><a href="source/example_inherit/apidoc.json">apidoc.json</a></p>
+    <pre><code>{
+  "name": "example-versioning",
+  "version": "0.2.0",
+  "description": "apiDoc versioning example"
+}</code></pre>
+    <p><br></p>
+    <p>So that your code not blow out with documentation blocks, i prefer to use a separate history file named <code>_apidoc.js</code>.
+      Before you change your documentation block, copy the old block to to this file, that's all.</p>
+    <p><a href="source/example_versioning/_apidoc.js">_apidoc.js</a></p>
+    <pre><code>/**
+ * @api {get} /user/:id Get User information
+ * <code class="important">@apiVersion 0.1.0</code> * @apiName GetUser * @apiGroup User * * @apiParam {Number} id Users unique
+      ID. * * @apiSuccess {String} firstname Firstname of the User. * @apiSuccess {String} lastname Lastname of the User.
+      * * @apiSuccessExample Success-Response: * HTTP/1.1 200 OK * { * "firstname": "John", * "lastname": "Doe" * } * * @apiError
+      UserNotFound The <code>id</code> of the User was not found. * * @apiErrorExample Error-Response: * HTTP/1.1 404 Not
+      Found * { * "error": "UserNotFound" * } */
+      </code>
+    </pre>
+    <p><a href="source/example_versioning/example.js">example.js</a> (your current project file)</p>
+    <pre><code>/**
+ * @api {get} /user/:id Get User information and Date of Registration.
+ * <code class="important">@apiVersion 0.2.0</code> * @apiName GetUser * @apiGroup User * * @apiParam {Number} id Users unique
+      ID. * * @apiSuccess {String} firstname Firstname of the User. * @apiSuccess {String} lastname Lastname of the User.
+      * @apiSuccess {Date} registered Date of Registration. * * @apiSuccessExample Success-Response: * HTTP/1.1 200 OK *
+      { * "firstname": "John", * "lastname": "Doe" * } * * @apiError UserNotFound The <code>id</code> of the User was not
+      found. * * @apiErrorExample Error-Response: * HTTP/1.1 404 Not Found * { * "error": "UserNotFound" * } */
+      </code>
+    </pre>
+    <p>Important is to set the version with <code>@apiVersion</code> on every documentation block.</p>
+    <p><br></p>
+    <p>The version can be used on every block, also on inherit blocks. You don't have to change the version on an inherit block,
+      the parser check automatically for the nearest predecessor.</p>
+  </article>
+  <!-- ============================================================ -->
+  <article id="example-full">
+    <h2>Full example (all together)</h2>
+    <p>This is a complex example with <code>inherit</code>, <code>versioning</code> file and history file <code>_apidoc.js</code>,
+      explanation is within code and generated documentation.</p>
+    <p><a href="example/">View example output</a></p>
+    <p><br></p>
+    <p>Files:</p>
+    <ul>
+      <li><a href="source/example_full/_apidoc.js">_apidoc.js</a></li>
+      <li><a href="source/example_full/example.js">example.js</a></li>
+      <li><a href="source/example_full/apidoc.json">apidoc.json</a></li>
+    </ul>
+  </article>
+</section>

@@ -1,0 +1,561 @@
+.reset(@position: relative) {
+  display: block;
+  position: @position;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0 auto;
+  min-width: inherit;
+  min-height: inherit;
+}
+
+.height (@height) {
+  height: @height;
+  line-height: @height;
+  min-height: @height;
+}
+
+.square (@value, @align: center) {
+  height: @value;
+  width: @value;
+  line-height: @value;
+  text-align: @align;
+  min-width: @value;
+  min-height: @value;
+}
+
+.centerize (@positon: absolute, @value: 20px) {
+  position: @positon;
+  top: 50%;
+  left: 50%;
+  height: @value;
+  width: @value;
+  line-height: @value;
+  margin-top: -(@value/2);
+  margin-left: -(@value/2);
+  text-align: center;
+}
+
+.clearfix () {
+  &:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  }
+}
+
+.list-style () {
+  margin: 0;
+  list-style-type: none;
+  text-align: left;
+}
+
+.box-sizing (@sizing: border-box) {
+  -ms-box-sizing: @sizing;
+  -moz-box-sizing: @sizing;
+  -webkit-box-sizing: @sizing;
+  box-sizing: @sizing;
+}
+
+.user-select (@argument: none) {
+  -webkit-user-select: @argument;
+  -moz-user-select: @argument;
+  -ms-user-select: @argument;
+  user-select: @argument;
+}
+
+.appearance (@argument: none) {
+  -webkit-appearance: @argument;
+  -moz-appearance: @argument;
+  -ms-appearance: @argument;
+  appearance: @argument;
+}
+
+.font-smooth () {
+  -moz-font-feature-settings: "liga", "kern";
+  -moz-osx-font-smoothing: grayscale;
+  -moz-font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: 'liga';
+}
+
+.columns (@colwidth: 250px, @colcount: 0, @colgap: 50px, @columnRuleColor: #EEE, @columnRuleStyle: solid, @columnRuleWidth: 1px) {
+  -moz-column-width: @colwidth;
+  -moz-column-count: @colcount;
+  -moz-column-gap: @colgap;
+  -moz-column-rule-color: @columnRuleColor;
+  -moz-column-rule-style: @columnRuleStyle;
+  -moz-column-rule-width: @columnRuleWidth;
+  -webkit-column-width: @colwidth;
+  -webkit-column-count: @colcount;
+  -webkit-column-gap: @colgap;
+  -webkit-column-rule-color: @columnRuleColor;
+  -webkit-column-rule-style: @columnRuleStyle;
+  -webkit-column-rule-width: @columnRuleWidth;
+  column-width: @colwidth;
+  column-count: @colcount;
+  column-gap: @colgap;
+  column-rule-color: @columnRuleColor;
+  column-rule-style: @columnRuleStyle;
+  column-rule-width: @columnRuleWidth;
+}
+
+.inner-shadow (@horizontal:0, @vertical:1px, @blur:2px, @color) {
+  -webkit-box-shadow: inset @horizontal @vertical @blur @color;
+  -moz-box-shadow: inset @horizontal @vertical @blur @color;
+  box-shadow: inset @horizontal @vertical @blur @color;
+}
+
+.opacity (@opacity: 0.5) {
+  -moz-opacity: @opacity;
+  -khtml-opacity: @opacity;
+  -webkit-opacity: @opacity;
+  opacity: @opacity;
+}
+
+.ellipsis (@width: 100%) {
+  width: @width;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.rounded (@radius: 2px) {
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+  border-radius: @radius;
+}
+
+.transition (@transition) {
+  -webkit-transition: @transition;
+  -moz-transition: @transition;
+  -o-transition: @transition;
+  transition: @transition;
+}
+
+.transition-property (@arguments: all) {
+  -webkit-transition-property: (@arguments);
+  -moz-transition-property: (@arguments);
+  -ms-transition-property: (@arguments);
+  -o-transition-property: (@arguments);
+  transition-property: (@arguments);
+}
+
+.transition-duration (@arguments: .5s) {
+  -webkit-transition-duration: (@arguments);
+  -moz-transition-duration: (@arguments);
+  -ms-transition-duration: (@arguments);
+  -o-transition-duration: (@arguments);
+  transition-duration: (@arguments);
+}
+
+.transition-delay (@arguments) {
+  -webkit-transition-delay: (@arguments);
+  -moz-transition-delay: (@arguments);
+  -ms-transition-delay: (@arguments);
+  -o-transition-delay: (@arguments);
+  transition-delay: (@arguments);
+}
+
+.transition-timing-function (@function) {
+  transition-timing-function: @function;
+  -webkit-transition-timing-function: @function;
+  -moz-transition-timing-function: @function;
+  -ms-transition-timing-function: @function;
+  -o-transition-timing-function: @function;
+}
+
+.transform (@transform) {
+  -webkit-transform: @transform;
+  -moz-transform: @transform;
+  -ms-transform: @transform;
+  -o-transform: @transform;
+  transform: @transform;
+}
+
+.transform-style (@transform-style) {
+  -webkit-transform-style: @transform-style;
+  -moz-transform-style: @transform-style;
+  -ms-transform-style: @transform-style;
+  -o-transform-style: @transform-style;
+  transform-style: @transform-style;
+}
+
+.transform-origin (@transform-origin) {
+  -webkit-transform-origin: @transform-origin;
+  -moz-transform-origin: @transform-origin;
+  -ms-transform-origin: @transform-origin;
+  -o-transform-origin: @transform-origin;
+  transform-origin: @transform-origin;
+}
+
+.translate (@x:0, @y:0) {
+  .transform(translate(@x, @y));
+}
+
+.keyframes (@name, @arguments) {
+  @-o-keyframes @name { @arguments(); }
+  @-ms-keyframes @name { @arguments(); }
+  @-moz-keyframes @name { @arguments(); }
+  @-webkit-keyframes @name { @arguments(); }
+  @keyframes @name { @arguments(); }
+}
+
+.animation (@animation) {
+  -webkit-animation: @animation;
+  -moz-animation: @animation;
+  -ms-animation: @animation;
+  -o-animation: @animation;
+  animation: @animation;
+}
+
+.animation-delay (@delay) {
+  animation-delay: @delay;
+  -webkit-animation-delay: @delay;
+  -moz-animation-delay: @delay;
+  -ms-animation-delay: @delay;
+  -o-animation-delay: @delay;
+}
+
+.animation-timing-function (@function) {
+  animation-timing-function: @function;
+  -webkit-animation-timing-function: @function;
+  -moz-animation-timing-function: @function;
+  -ms-animation-timing-function: @function;
+  -o-animation-timing-function: @function;
+}
+
+.filter (@value) {
+  -webkit-filter: @value;
+  -moz-filter: @value;
+  -ms-filter: @value;
+  -o-filter: @value;
+  filter: @value;
+}
+
+.blur (@intensity) {
+  -webkit-filter: blur(@intensity);
+  -moz-filter: blur(@intensity);
+  -ms-filter: blur(@intensity);
+  -o-filter: blur(@intensity);
+  filter: blur(@intensity);
+}
+
+.perspective (@perspective) {
+  -webkit-perspective: @perspective;
+  -moz-perspective: @perspective;
+  -ms-perspective: @perspective;
+  -o-perspective: @perspective;
+  perspective: @perspective;
+}
+
+.gradient (@origin: left, @start: #ffffff, @stop: #000000) {
+  background-color: @start;
+  background-image: -webkit-linear-gradient(@origin, @start, @stop);
+  background-image: -moz-linear-gradient(@origin, @start, @stop);
+  background-image: -o-linear-gradient(@origin, @start, @stop);
+  background-image: -ms-linear-gradient(@origin, @start, @stop);
+  background-image: linear-gradient(@origin, @start, @stop);
+}
+
+.border-radius (@radius: 5px) {
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+  border-radius: @radius;
+}
+
+.shadow (@shadow: 0 0 10px 0 rgba(83,83,83,.12)) {
+  -webkit-box-shadow: @shadow;
+  -moz-box-shadow: @shadow;
+  -ms-box-shadow: @shadow;
+  -o-box-shadow: @shadow;
+  box-shadow: @shadow;
+}
+
+.multiple-shadow(@primary: 0 1px 0 0 rgba(0,0,0,.05), @secondary: 0 0 20px 0 rgba(0,0,0,.05)) {
+  -webkit-box-shadow: @primary, @secondary;
+  -moz-box-shadow: @primary, @secondary;
+  -ms-box-shadow: @primary, @secondary;
+  -o-box-shadow: @primary, @secondary;
+  box-shadow: @primary, @secondary;
+}
+
+.backface (@value: hidden) {
+  backface-visibility: @value;
+  -moz-backface-visibility: @value;
+  -webkit-backface-visibility: @value;
+}
+
+.multiple-shadow (@arguments1, @arguements2) {
+  -webkit-box-shadow: @arguments1, @arguements2;
+  -moz-box-shadow: @arguments1, @arguements2;
+  box-shadow: @arguments1, @arguements2;
+}
+
+.reflect (@length: 50%, @opacity: 0.2){
+  -webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom,
+  from(transparent), color-stop(@length, transparent), to(rgba(255,255,255,@opacity)));
+}
+
+.background-clip (@argument: padding-box) {
+  -moz-background-clip: @argument;
+  -webkit-background-clip: @argument;
+  background-clip: @argument;
+}
+
+.rotation (@deg:5deg){
+  .transform(rotate(@deg));
+}
+
+.scale (@ratio:1.5){
+  .transform(scale(@ratio));
+}
+
+.background-image (@size: cover, @positon: center, @url: url(../img/logo.png)) {
+  background-image: @url;
+  background-repeat: no-repeat;
+  background-position: @positon;
+  .background-size(@size);
+}
+
+.background-size(@size: cover) {
+  -webkit-background-size: @size;
+  -moz-background-size: @size;
+  -ms-background-size: @size;
+  -o-background-size: @size;
+  background-size: @size;
+}
+
+.fixed (@top: 0, @left: 0) {
+  display: block;
+  position: fixed;
+  top: @top;
+  left: @left;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.absoluter(@top: 0, @left: 0) {
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
+  top: @top;
+  left: @left;
+}
+
+.calc (@prop; @val) {
+  @{prop}: calc(~'@{val}');
+  @{prop}: -moz-calc(~'@{val}');
+  @{prop}: -webkit-calc(~'@{val}');
+  @{prop}: -o-calc(~'@{val}');
+}
+
+.scrollbar (@barcolor: rgba(206, 208, 210, 0.28), @thumbcolor: rgba(92, 92, 92, 0.64), @width: 6px) {
+  &::-webkit-scrollbar {
+    width: @width;
+    background-color: @barcolor;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: @thumbcolor;
+  }
+}
+
+.circle-loader (@size: 30px, @border-color: @brand-color) {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  border: 4px solid transparent;
+  border-top-color: @border-color;
+  border-left-color: @border-color;
+  width: @size;
+  height: @size;
+  .animation('rotate' .5s infinite);
+
+  .rounded(50%);
+  .keyframes('rotate', {
+  0% { .transform(rotate(0deg)); }
+  100% { .transform(rotate(360deg)); }
+  });
+}
+
+.placeholder (@color: #B0AFB0, @font-style: normal) {
+  &::-webkit-input-placeholder {
+    color: @color;
+    font-style: @font-style;
+  }
+
+  &:-moz-placeholder { /* Firefox 18- */
+    color: @color;
+    font-style: @font-style;
+  }
+
+  &::-moz-placeholder {  /* Firefox 19+ */
+    color: @color;
+    font-style: @font-style;
+  }
+
+  &:-ms-input-placeholder {
+    color: @color;
+    font-style: @font-style;
+  }
+}
+
+.flex-display(@display: flex) {
+  display: ~"-webkit-@{display}";
+  display: ~"-moz-@{display}";
+  display: ~"-ms-@{display}box"; // IE10 uses -ms-flexbox
+  display: ~"-ms-@{display}"; // IE11
+  display: @display;
+}
+
+// The 'flex' shorthand
+// - applies to: flex items
+// <positive-number>, initial, auto, or none
+.flex(@columns: initial) {
+  -webkit-flex: @columns;
+  -moz-flex: @columns;
+  -ms-flex: @columns;
+  flex: @columns;
+}
+
+// Flex Flow Direction
+// - applies to: flex containers
+// row | row-reverse | column | column-reverse
+.flex-direction(@direction: row) {
+  -webkit-flex-direction: @direction;
+  -moz-flex-direction: @direction;
+  -ms-flex-direction: @direction;
+  flex-direction: @direction;
+}
+
+// Flex Line Wrapping
+// - applies to: flex containers
+// nowrap | wrap | wrap-reverse
+.flex-wrap(@wrap: nowrap) {
+  -webkit-flex-wrap: @wrap;
+  -moz-flex-wrap: @wrap;
+  -ms-flex-wrap: @wrap;
+  flex-wrap: @wrap;
+}
+
+// Flex Direction and Wrap
+// - applies to: flex containers
+// <flex-direction> || <flex-wrap>
+.flex-flow(@flow) {
+  -webkit-flex-flow: @flow;
+  -moz-flex-flow: @flow;
+  -ms-flex-flow: @flow;
+  flex-flow: @flow;
+}
+
+// Display Order
+// - applies to: flex items
+// <integer>
+.flex-order(@order: 0) {
+  -webkit-order: @order;
+  -moz-order: @order;
+  -ms-order: @order;
+  order: @order;
+}
+
+// Flex grow factor
+// - applies to: flex items
+// <number>
+.flex-grow(@grow: 0) {
+  -webkit-flex-grow: @grow;
+  -moz-flex-grow: @grow;
+  -ms-flex-grow: @grow;
+  flex-grow: @grow;
+}
+
+// Flex shrink
+// - applies to: flex item shrink factor
+// <number>
+.flex-shrink(@shrink: 1) {
+  -webkit-flex-shrink: @shrink;
+  -moz-flex-shrink: @shrink;
+  -ms-flex-shrink: @shrink;
+  flex-shrink: @shrink;
+}
+
+// Flex basis
+// - the initial main size of the flex item
+// - applies to: flex itemsnitial main size of the flex item
+// <width>
+.flex-basis(@width: auto) {
+  -webkit-flex-basis: @width;
+  -moz-flex-basis: @width;
+  -ms-flex-basis: @width;
+  flex-basis: @width;
+}
+
+// Axis Alignment
+// - applies to: flex containers
+// flex-start | flex-end | center | space-between | space-around
+.justify-content(@justify: flex-start) {
+  -webkit-justify-content: @justify;
+  -moz-justify-content: @justify;
+  -ms-justify-content: @justify;
+  justify-content: @justify;
+}
+
+// Packing Flex Lines
+// - applies to: multi-line flex containers
+// flex-start | flex-end | center | space-between | space-around | stretch
+.align-content(@align: stretch) {
+  -webkit-align-content: @align;
+  -moz-align-content: @align;
+  -ms-align-content: @align;
+  align-content: @align;
+}
+
+// Cross-axis Alignment
+// - applies to: flex containers
+// flex-start | flex-end | center | baseline | stretch
+.align-items(@align: stretch) {
+  -webkit-align-items: @align;
+  -moz-align-items: @align;
+  -ms-align-items: @align;
+  align-items: @align;
+}
+
+// Cross-axis Alignment
+// - applies to: flex items
+// auto | flex-start | flex-end | center | baseline | stretch
+.align-self(@align: auto) {
+  -webkit-align-self: @align;
+  -moz-align-self: @align;
+  -ms-align-self: @align;
+  align-self: @align;
+}
+
+.touch () {
+  -webkit-overflow-scrolling: touch;
+}
+
+.alpha-background(@rgb:#000,@alpha:.5){
+  @rgba-color:fade(@rgb,@alpha*100);
+  @argb-color:argb(@rgba-color);
+  background-color:@rgba-color;
+  filter:~"progid:DXImageTransform.Microsoft.gradient(startColorstr='@{argb-color}', endColorstr='@{argb-color}', GradientType=0)";
+  zoom:1;
+  :root &{
+    filter: none;
+  }
+}

@@ -1,0 +1,93 @@
+@import 'normalize.less';
+@import 'variables.less';
+@import 'mixins.less';
+
+*, :after, :before {
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  zoom: 1;
+  margin: 0;
+  padding: 0;
+  .font-smooth();
+  .box-sizing();
+}
+
+html {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-width: 320px;
+}
+
+html, body {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  font-size: 13px;
+  font-family: @font-family;
+  font-weight: 400;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  background-color: @secondary-background;
+
+  .user-select();
+  .font-smooth();
+}
+
+b, h1, h2, h3, h4, h5 {
+  font-weight: 500;
+}
+
+a {
+  text-decoration: none;
+  color: @color;
+}
+
+ul {
+  list-style-type: none;
+}
+
+*:focus, input, textarea, button {
+  border: none;
+  outline: none;
+  .appearance();
+}
+
+#application {
+  .reset(fixed);
+
+  #shobhit {
+    .reset(relative);
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+}
+
+/**
+ * External Plugin Styles
+ */
+
+ /**
+  * Globals or Base Styles
+  */
+@import 'core/global.less';
+
+/**
+ * Application Styles
+ */
+@import 'components/header.less';
+@import 'components/sidebar.less';
+@import 'components/content.less';
+@import 'components/container.less';
+@import 'components/card.less';
+@import 'components/developers.less';
+@import 'components/error.less';
+
+ /**
+  * Override Styles
+  */
+@import 'core/override.less';
