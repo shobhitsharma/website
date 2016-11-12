@@ -2,7 +2,7 @@
 
 import fs from 'fs';
 import url from 'url';
-import setup from config;
+import setup from 'config';
 import gulp from 'gulp';
 import gulpif from 'gulp-if';
 import sourcemaps from 'gulp-sourcemaps';
