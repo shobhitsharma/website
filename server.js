@@ -8,13 +8,13 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var config = require('./settings.js');
+var frontend = require('./config/frontend.js');
 var Router = require('./lib').Router;
 
 var app = express();
-var settings = process.env.SETTINGS || path.join(__dirname, 'settings.js');
+var config = process.env.CONFIG || path.join(__dirname, 'config/server.js');
 
-app.set('settings', settings);
+app.set('config', config);
 app.set('views', path.join(__dirname, 'public/views'));
 app.engine('.hbs', handlebars({
   defaultLayout: 'layout',
@@ -33,7 +33,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(cookieParser());
 
-app.use(express.static(path.join(__dirname, config.ui.buildDir)));
+app.use(express.static(path.join(__dirname, frontend.buildDir)));
 app.use('/', new Router(app));
 
 // Application settings

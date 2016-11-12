@@ -15,13 +15,13 @@ var package_json = require('../package.json');
 var debug = require('debug')('cf-brandbeat:server');
 var http = require('http');
 
-var settings = require(app.get('settings'));
+var config = require(app.get('config'));
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(settings.port || process.env.PORT || '3000');
+var port = normalizePort(config.port || process.env.PORT || '3000');
 
 /**
  * Setting up port.
@@ -94,7 +94,7 @@ function onError(error) {
  */
 
 function onListening() {
-  var environment = app.settings.env || process.env.NODE_ENV;
+  var environment = process.env.NODE_ENV;
   var version = package_json.version;
   var addr = server.address();
   var bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;

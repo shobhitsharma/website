@@ -19,13 +19,14 @@ import shell from 'gulp-shell';
 import browserSync from 'browser-sync';
 import sequence from 'run-sequence';
 import history from 'connect-history-api-fallback';
-import settings from './settings.js';
+import config from './config/server.js';
+import frontend from './config/frontend.js';
 
-const config = {
-  PRODUCTION: settings.production, // Production mode is disabled when running default task (dev mode)
-  PORT: settings.port || 8080, // Development server port
+const settings = {
+  PRODUCTION: frontend.production, // Production mode is disabled when running default task (dev mode)
+  PORT: config.port || 8080, // Development server port
   SRC_DIR: 'public/', // Relative paths to sources and output directories
-  BUILD_DIR: settings.ui.buildDir || 'dist/',
+  BUILD_DIR: frontend.buildDir || 'dist/',
   src: function (path) {
     return this.SRC_DIR + path;
   },
@@ -42,7 +43,7 @@ sequence.use(gulp);
 
 gulp.task('scripts', function () {
   let bundler = browserify({
-    entries: config.src('app/index.js'),
+    entries: settings.src('app/index.js'),
     debug: true,
     transform: [hbsfy]
   });
@@ -58,17 +59,17 @@ gulp.task('scripts', function () {
       loadMaps: true
     }))
     .pipe(
-      gulpif(config.PRODUCTION, uglify())
+      gulpif(settings.PRODUCTION, uglify())
     )
     .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest(config.dest('js')))
+    .pipe(gulp.dest(settings.dest('js')))
     .pipe(browserSync.reload({
       stream: true
     }));
 });
 
 gulp.task('styles', function () {
-  return gulp.src(config.src('styles/index.less'), {
+  return gulp.src(settings.src('styles/index.less'), {
       base: '.'
     })
     .pipe(sourcemaps.init({
@@ -78,11 +79,11 @@ gulp.task('styles', function () {
       plugins: [lessAutoprefixPlugin]
     }))
     .pipe(
-      gulpif(config.PRODUCTION, minifyCSS())
+      gulpif(settings.PRODUCTION, minifyCSS())
     )
     .pipe(rename('bundle.css'))
     .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest(config.dest('css')))
+    .pipe(gulp.dest(settings.dest('css')))
     .pipe(browserSync.reload({
       stream: true
     }));
@@ -90,13 +91,13 @@ gulp.task('styles', function () {
 
 gulp.task('assets', function () {
   // TODO: Optimize svg and images here
-  return gulp.src(config.src('assets/**/*'))
-    .pipe(gulp.dest(config.dest('assets')));
+  return gulp.src(settings.src('assets/**/*'))
+    .pipe(gulp.dest(settings.dest('assets')));
 });
 
 gulp.task('html', function () {
-  return gulp.src(config.src('index.html'))
-    .pipe(gulp.dest(config.BUILD_DIR))
+  return gulp.src(settings.src('index.html'))
+    .pipe(gulp.dest(settings.BUILD_DIR))
     .pipe(browserSync.reload({
       stream: true
     }));
@@ -112,7 +113,7 @@ gulp.task('update', function (done) {
       read: false
     })
     .pipe(shell([
-      'git config --global pull.default current',
+      'git settings --global pull.default current',
       'git fetch --all',
       'git pull',
       'npm install'
@@ -140,16 +141,16 @@ gulp.task('clean', function (done) {
  */
 gulp.task('server', ['build'], function () {
   browserSync({
-    port: config.PORT,
+    port: settings.PORT,
     server: {
-      baseDir: config.BUILD_DIR,
+      baseDir: settings.BUILD_DIR,
       middleware: [history()]
     }
   });
 
-  gulp.watch([config.src('app/**/*.js'), config.src('app/**/*.hbs')], ['scripts']);
-  gulp.watch(config.src('styles/**/*.less'), ['styles']);
-  gulp.watch(config.src('index.html'), ['html']);
+  gulp.watch([settings.src('app/**/*.js'), settings.src('app/**/*.hbs')], ['scripts']);
+  gulp.watch(settings.src('styles/**/*.less'), ['styles']);
+  gulp.watch(settings.src('index.html'), ['html']);
 });
 
 /**

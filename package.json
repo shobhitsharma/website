@@ -14,7 +14,8 @@
     "start": "node ./bin/www",
     "clean": "rimraf dist/{css/*,js/*,images/*}",
     "develop": "npm install && gulp",
-    "build": "NODE_ENV=production gulp build"
+    "build": "NODE_ENV=production gulp build",
+    "git": "git config --global pull.default current && git pull --rebase"
   },
   "dependencies": {
     "express": "^4.14.0",
