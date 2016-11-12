@@ -2,7 +2,7 @@
 
 import fs from 'fs';
 import url from 'url';
-import setup from 'config';
+import settings from './config.js';
 import gulp from 'gulp';
 import gulpif from 'gulp-if';
 import sourcemaps from 'gulp-sourcemaps';
@@ -23,7 +23,7 @@ import history from 'connect-history-api-fallback';
 
 const config = {
   PRODUCTION: true, // Production mode is disabled when running default task (dev mode)
-  PORT: setup.port || 8080, // Development server port
+  PORT: settings.port || 8080, // Development server port
   SRC_DIR: 'public/', // Relative paths to sources and output directories
   BUILD_DIR: 'dist/',
   src: function (path) {
