@@ -14,7 +14,6 @@ var app = require('../server.js');
 var package_json = require('../package.json');
 var debug = require('debug')('cf-brandbeat:server');
 var http = require('http');
-var log = require('cf-log');
 
 var config = require(app.get('config'));
 
@@ -78,11 +77,11 @@ function onError(error) {
   // handle specific listen errors with friendly messages
   switch (error.code) {
     case 'EACCES':
-      log.error(bind + ' requires elevated privileges');
+      console.error(bind + ' requires elevated privileges');
       process.exit(1);
       break;
     case 'EADDRINUSE':
-      log.error(bind + ' is already in use');
+      console.error(bind + ' is already in use');
       process.exit(1);
       break;
     default:
@@ -101,6 +100,6 @@ function onListening() {
   var bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
 
   debug('Listening on' + bind);
-  log.info('Shobhit Source v' + version + ' ' + environment +
+  console.log('Shobhit Source v' + version + ' ' + environment +
     ' is listening at port:%s', addr.port);
 }

@@ -8,7 +8,6 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var errorHandling = require('cf-toolkit').Middleware.errorHandling;
 var Router = require('./lib').Router;
 
 var app = express();
@@ -42,7 +41,6 @@ app.set('strict routing', true);
 app.set('x-powered-by', false);
 
 app.use(logger('dev'));
-app.use(errorHandling());
 
 app.use(function (req, res, next) {
   var err = new Error('Not Found');
