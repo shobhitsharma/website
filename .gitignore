@@ -43,5 +43,6 @@ config.js
 config-local.js
 config-development.js
 config-production.js
+settings.js
 .DS_Store
 erl_crash.dump
