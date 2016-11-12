@@ -8,6 +8,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var config = require('./settings.js');
 var Router = require('./lib').Router;
 
 var app = express();
@@ -32,7 +33,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(cookieParser());
 
-app.use(express.static(path.join(__dirname, settings.ui.buildDir)));
+app.use(express.static(path.join(__dirname, config.ui.buildDir)));
 app.use('/', new Router(app));
 
 // Application settings
