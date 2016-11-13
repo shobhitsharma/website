@@ -5,6 +5,7 @@
  */
 
 require('babel-polyfill');
+require('dotenv').config();
 
 /**
  * Module dependencies.
@@ -15,13 +16,11 @@ var package_json = require('../package.json');
 var debug = require('debug')('cf-brandbeat:server');
 var http = require('http');
 
-var config = require(app.get('config'));
-
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(config.port || process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || '3000');
 
 /**
  * Setting up port.

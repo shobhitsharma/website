@@ -33,12 +33,10 @@ npm-debug.log
 .vscode
 .project
 .settings
+.env
 dist
 dist-temp
 temp
-public/js/vendor
-public/management
-public/css
 config.js
 config-local.js
 config-development.js

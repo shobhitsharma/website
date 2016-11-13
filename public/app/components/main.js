@@ -3,8 +3,11 @@ import Backbone from 'backbone';
 import SidebarView from './sidebar/sidebar.js';
 import ContainerView from './container/main.js';
 
-
 export default class MainView extends Backbone.View {
+
+  get id() {
+    return 'shobhit';
+  }
 
   constructor(options) {
     super(options);

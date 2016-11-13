@@ -1,36 +1,26 @@
-@sidebar-width: 30%;
-
 #shobhit {
 
   .container {
     position: relative;
-    display: block;
-    width: 100%;
+    display: inline-block;
+    float: right;
+    width: 100% - @sidebar-width;
     height: 100%;
     padding: 0;
     margin: 0;
+    background-color: white;
     overflow: hidden;
 
-    .sidebar, .content {
+    .content {
       display: inline-block;
       height: 100%;
       padding: 0;
       margin: 0;
     }
 
-    > .sidebar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: @sidebar-width;
-      background-color: #f9f9f9;
-      z-index: 10;
-    }
-
     > .content {
       position: relative;
       width: 100%;
-      padding-left: @sidebar-width;
     }
   }
 
