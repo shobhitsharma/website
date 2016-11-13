@@ -8,7 +8,7 @@
     color: @color;
     margin: 0;
     padding: 2%;
-    font-size: 1.3em;
+    font-size: 1.5em;
     height: 100%;
 
     > .profile {
@@ -22,6 +22,7 @@
         .image {
           display: inline-block;
           border-radius: 50%;
+          margin: 2% 0;
           .height(128px);
         }
       }
@@ -29,11 +30,22 @@
       .info {
         .name, .description {
           padding: 5px 0;
+          line-height: 1.3;
+        }
+
+        .name {
+          font-weight: 600;
+        }
+
+        .description {
+          color: fade(@color, 70%);
         }
       }
 
       .dev-badges {
         padding-top: 10px;
+        color: fade(@color, 70%);
+
         > span {
           font-size: 1.5em;
         }
