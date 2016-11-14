@@ -60,7 +60,15 @@ gulp.task('scripts', function () {
       loadMaps: true
     }))
     .pipe(
-      gulpif(settings.ENV, uglify())
+      gulpif(settings.ENV === 'production', uglify({
+        compress: {
+          dead_code: true,
+          drop_debugger: true,
+          unused: true,
+          warnings: true,
+          drop_console: true
+        }
+      }))
     )
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest(settings.dest('js')))

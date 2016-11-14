@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import Backbone from 'backbone';
 import Template from './projects.hbs';
+import Repos from '../../../data/repos.json';
 
 class RepoView extends Backbone.View {
 
@@ -14,15 +15,15 @@ class RepoView extends Backbone.View {
   }
 
   render() {
+    let language = (this.model.get('language') || 'default').toLowerCase();
 
-    console.log('>>>>>>', this.model)
     this.$el.empty().append(`
-      <a class="repo-info" href="` + this.model.get('url') + `" target="_blank">
+      <a class="repo-info" href="` + this.model.get('html_url') + `" target="_blank">
         <div class="details">
           <h2 class="name">` + this.model.get('name') + `</h2>
           <h4 class="description">` + this.model.get('description') + `</h4>
           <div class="langs">
-            <span class="badge devicons devicons-javascript_badge"></span>
+            <span class="badge devicons devicons-` + (language || 'github_badge') + `"></span>
           </div>
         </div>
       </a>
@@ -46,29 +47,10 @@ export default class ProjectsView extends Backbone.View {
 
   render() {
     this.$el.empty().append(Template(this.model.toJSON()));
-    var $list = this.$('.repos');
+    const $list = this.$('.repos');
 
-    // $.get('https://api.github.com/users/shobhitsharma/repos', function (data) {
-    //   $list.empty();
-
-    //   data.forEach(function (repo) {
-    //     var repoView = new RepoView({
-    //       model: new Backbone.Model(repo)
-    //     });
-
-    //     $list.append(repoView.render().el);
-    //   });
-    // });
-
-    [
-      {
-        name: 'embedo',
-        description: 'Embeds and adjusts facebook posts, tweets, videos, instagram easily',
-        url: 'https://github.com/shobhitsharma/embedo',
-        language: ['javascript']
-      }
-    ].forEach(function (repo) {
-      var repoView = new RepoView({
+    Repos.forEach((repo) => {
+      let repoView = new RepoView({
         model: new Backbone.Model(repo)
       });
 
