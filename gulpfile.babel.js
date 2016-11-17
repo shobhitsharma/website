@@ -1,8 +1,10 @@
 'use strict';
 
 import fs from 'fs';
+import path from 'path';
 import url from 'url';
 import dotenv from 'dotenv';
+import del from 'del';
 import gulp from 'gulp';
 import gulpif from 'gulp-if';
 import sourcemaps from 'gulp-sourcemaps';
@@ -11,15 +13,16 @@ import babelify from 'babelify';
 import hbsfy from 'hbsfy';
 import source from 'vinyl-source-stream';
 import buffer from 'vinyl-buffer';
+import gutil from 'gulp-util';
 import uglify from 'gulp-uglify';
 import less from 'gulp-less';
-import LessAutoprefixPlugin from 'less-plugin-autoprefix';
-import minifyCSS from 'gulp-minify-css';
 import rename from 'gulp-rename';
 import shell from 'gulp-shell';
 import browserSync from 'browser-sync';
 import sequence from 'run-sequence';
 import history from 'connect-history-api-fallback';
+import LessCleanCSS from 'less-plugin-clean-css';
+import LessAutoprefixPlugin from 'less-plugin-autoprefix';
 
 dotenv.config();
 
@@ -42,7 +45,19 @@ const lessAutoprefixPlugin = new LessAutoprefixPlugin({
 
 sequence.use(gulp);
 
-gulp.task('scripts', function () {
+function onError(err) {
+  gutil.log(err.message);
+  process.exit(1);
+}
+
+/*
+ $ gulp clean
+ */
+gulp.task('clean', function (done) {
+  del(['dist'], done);
+});
+
+gulp.task('scripts', function (done) {
   let bundler = browserify({
     entries: settings.src('app/index.js'),
     debug: true,
@@ -77,19 +92,35 @@ gulp.task('scripts', function () {
     }));
 });
 
+/*
+ $ gulp styles
+ */
 gulp.task('styles', function () {
-  return gulp.src(settings.src('styles/index.less'), {
-      base: '.'
-    })
+  var browsers = [
+    'Android >= 2.3',
+    'Chrome >= 20',
+    'Firefox >= 24',
+    'Explorer >= 8',
+    'iOS >= 6',
+    'Opera >= 12',
+    'Safari >= 6'
+  ];
+  var autoprefix = new LessAutoprefixPlugin({
+    browsers: browsers,
+    map: true
+  });
+  var cleancss = new LessCleanCSS({
+    advanced: true
+  });
+
+  return gulp.src(settings.src('styles/index.less'))
     .pipe(sourcemaps.init({
       loadMaps: true
     }))
     .pipe(less({
-      plugins: [lessAutoprefixPlugin]
-    }))
-    .pipe(
-      gulpif(settings.ENV, minifyCSS())
-    )
+      paths: [path.join(__dirname, 'less', 'includes')],
+      plugins: [cleancss, autoprefix]
+    }).on('error', onError))
     .pipe(rename('bundle.css'))
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest(settings.dest('css')))
