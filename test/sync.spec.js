@@ -53,7 +53,7 @@ describe('Sync', function () {
   });
 
   describe('.start', function () {
-    var t, p, getCollectionStub, createDocumentSpy, connectToMongoStub, hasNextStub, nextStub, fakeCursor, remainingDocs;
+    var t, p, getCollectionStub, createDocumentSpy, connectStub, hasNextStub, nextStub, fakeCursor, remainingDocs;
 
     beforeEach(function () {
       remainingDocs = db.collection.length;
@@ -84,7 +84,7 @@ describe('Sync', function () {
         return collection;
       });
 
-      connectToMongoStub = sinon.stub(Sync.prototype, 'connectToMongo', function () {
+      connectStub = sinon.stub(Sync.prototype, 'connect', function () {
         return new Promise(function (resolve, reject) {
           resolve(null);
         });
