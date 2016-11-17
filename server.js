@@ -8,6 +8,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var compression = require('compression');
 var Router = require('./lib').Router;
 
 var app = express();
@@ -20,6 +21,8 @@ app.engine('.hbs', handlebars({
   partialsDir: path.join(__dirname, 'public/views/partials')
 }));
 app.set('view engine', '.hbs');
+
+app.use(compression());
 
 app.use(favicon(path.join(__dirname, 'public', '/assets/favicon.ico')));
 app.use(bodyParser.json({
