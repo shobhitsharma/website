@@ -42,7 +42,7 @@ describe('Sync', function () {
     makeAllTweets();
   });
 
-  describe('Input validation', function () {
+  describe('#input_validation', function () {
     it('should throw an error when Sync is called without options', function () {
       try {
         new Sync();
@@ -52,7 +52,7 @@ describe('Sync', function () {
     });
   });
 
-  describe('.start', function () {
+  describe('#start()', function () {
     var t, p, getCollectionStub, createDocumentSpy, connectStub, hasNextStub, nextStub, fakeCursor, remainingDocs;
 
     beforeEach(function () {
