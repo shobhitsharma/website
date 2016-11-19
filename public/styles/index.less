@@ -12,22 +12,11 @@
   .box-sizing();
 }
 
-html {
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-}
-
-body {
-  min-width: 320px;
-}
-
 html, body {
+  display: block;
   position: relative;
-  height: 100%;
   width: 100%;
-  font-size: 13px;
   font-family: @font-family;
-  font-weight: 400;
   padding: 0;
   margin: 0;
   overflow: hidden;
@@ -36,6 +25,19 @@ html, body {
 
   .user-select();
   .font-smooth();
+}
+
+html {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  font-size: 0.75em;
+  min-width: 320px;
+  font-weight: 400;
 }
 
 b, h1, h2, h3, h4, h5 {

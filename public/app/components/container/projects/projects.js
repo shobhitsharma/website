@@ -33,6 +33,10 @@ class RepoView extends Backbone.View {
   }
 }
 
+class RepoPreview extends Backbone.View {
+
+}
+
 export default class ProjectsView extends Backbone.View {
 
   get className() {

@@ -1,6 +1,10 @@
 import Backbone from 'backbone';
 import Template from './blog.hbs';
 
+class BlogPreview extends Backbone.View {
+
+}
+
 export default class BlogView extends Backbone.View {
 
   get className() {
