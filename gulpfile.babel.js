@@ -85,7 +85,7 @@ gulp.task('scripts', function (done) {
         }
       }))
     )
-    .pipe(gulpif(settings.ENV !== 'production', sourcemaps.write('./'))
+    .pipe(gulpif(settings.ENV !== 'production', sourcemaps.write('./')))
     .pipe(gulp.dest(settings.dest('js')))
     .pipe(browserSync.reload({
       stream: true
@@ -122,7 +122,7 @@ gulp.task('styles', function () {
       plugins: [cleancss, autoprefix]
     }).on('error', onError))
     .pipe(rename('bundle.css'))
-    .pipe(gulpif(settings.ENV !== 'production', sourcemaps.write('./'))
+    .pipe(gulpif(settings.ENV !== 'production', sourcemaps.write('./')))
     .pipe(gulp.dest(settings.dest('css')))
     .pipe(browserSync.reload({
       stream: true
