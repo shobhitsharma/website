@@ -85,7 +85,7 @@ gulp.task('scripts', function (done) {
         }
       }))
     )
-    .pipe(sourcemaps.write('./'))
+    .pipe(gulpif(settings.ENV !== 'production', sourcemaps.write('./'))
     .pipe(gulp.dest(settings.dest('js')))
     .pipe(browserSync.reload({
       stream: true
@@ -122,7 +122,7 @@ gulp.task('styles', function () {
       plugins: [cleancss, autoprefix]
     }).on('error', onError))
     .pipe(rename('bundle.css'))
-    .pipe(sourcemaps.write('./'))
+    .pipe(gulpif(settings.ENV !== 'production', sourcemaps.write('./'))
     .pipe(gulp.dest(settings.dest('css')))
     .pipe(browserSync.reload({
       stream: true
@@ -141,23 +141,6 @@ gulp.task('html', function () {
     .pipe(browserSync.reload({
       stream: true
     }));
-});
-
-/**
- * $ gulp update
- *
- * Pulls latest commit and install dependencies
- */
-gulp.task('update', function (done) {
-  return gulp.src('/', {
-      read: false
-    })
-    .pipe(shell([
-      'git settings --global pull.default current',
-      'git fetch --all',
-      'git pull',
-      'npm install'
-    ], done));
 });
 
 /**
@@ -200,15 +183,6 @@ gulp.task('server', ['build'], function () {
  */
 gulp.task('build', function (done) {
   return sequence('clean', 'scripts', 'styles', 'assets', 'html', done);
-});
-
-/**
- * $ gulp deploy
- *
- * Pulls latest code, cleans and minifies
- */
-gulp.task('deploy', function (done) {
-  return sequence('update', 'clean', 'build', done);
 });
 
 /**
