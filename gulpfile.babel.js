@@ -15,6 +15,7 @@ import buffer from 'vinyl-buffer';
 import gutil from 'gulp-util';
 import uglify from 'gulp-uglify';
 import less from 'gulp-less';
+import image from 'gulp-image';
 import rename from 'gulp-rename';
 import nodemon from 'gulp-nodemon';
 import browserSync from 'browser-sync';
@@ -140,8 +141,18 @@ gulp.task('html', () => {
  * Optimize and manipulate assets
  */
 gulp.task('assets', () => {
-  // TODO: Optimize svg and images here
   return gulp.src(settings.src('assets/**/*'))
+    .pipe(image({
+      pngquant: true,
+      optipng: false,
+      zopflipng: true,
+      jpegRecompress: false,
+      jpegoptim: true,
+      mozjpeg: true,
+      gifsicle: true,
+      svgo: true,
+      concurrent: 10
+    }))
     .pipe(gulp.dest(settings.dest('assets')));
 });
 
@@ -150,7 +161,7 @@ gulp.task('assets', () => {
  *
  * Start node server and watches backend
  */
-gulp.task('nodemon',  (cb) => {
+gulp.task('nodemon', (cb) => {
   var called = false;
   return nodemon({
       script: 'bin/www',
