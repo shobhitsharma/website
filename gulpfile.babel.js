@@ -138,7 +138,9 @@ gulp.task('html', () => {
   return gulp.src(settings.src('views/index*.pug'))
     .pipe(pug({
       data: {
-        env: settings.ENV
+        env: settings.ENV,
+        title: 'shobhit.',
+        description: 'I write code. I play guitar. I wander avidly.'
       }
     }))
     .pipe(rename('index.html'))
