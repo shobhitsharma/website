@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import Backbone from 'backbone';
+import Hello from '../data/hello.json';
 
 export default class SidebarView extends Backbone.View {
 
@@ -14,13 +15,17 @@ export default class SidebarView extends Backbone.View {
   }
 
   template () {
+    let locale = window.navigator.language || 'en-US';
+    locale = locale.split('-');
+    let hello = locale.length ? Hello[(locale[1] || 'us').toUpperCase()] : Hello.US;
+
     return `
       <div class="profile">
         <div class="user">
           <img class="image" src="/assets/shobhit.png"/>
         </div>
         <div class="info">
-          <h1 class="name">Hola.<br/>I'm Shobhit.</h1>
+          <h1 class="name">`+ hello +`.<br/>I'm Shobhit.</h1>
           <h4 class="description">I write code. I play guitar. I wander avidly.</h4>
         </div>
         <div class="dev-badges">

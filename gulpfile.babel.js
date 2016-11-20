@@ -15,6 +15,7 @@ import gutil from 'gulp-util';
 import uglify from 'gulp-uglify';
 import less from 'gulp-less';
 import gzip from 'gulp-gzip';
+import pug from 'gulp-pug';
 import image from 'gulp-image';
 import rename from 'gulp-rename';
 import nodemon from 'gulp-nodemon';
@@ -137,7 +138,13 @@ gulp.task('styles', () => {
  * Interpolates index
  */
 gulp.task('html', () => {
-  return gulp.src(settings.src('index.html'))
+  return gulp.src(settings.src('views/index*.pug'))
+    .pipe(pug({
+      data: {
+        env: settings.ENV
+      }
+    }))
+    .pipe(rename('index.html'))
     .pipe(gulp.dest(settings.BUILD_DIR))
     .pipe(reload({
       stream: true
@@ -201,7 +208,7 @@ gulp.task('server', ['build', 'nodemon'], (cb) => {
       middleware: [history()]
     }
   });
-  gulp.watch(settings.src('app/**/*.js'), ['scripts']);
+  gulp.watch([settings.src('app/**/*.js'), settings.src('app/**/*.json')], ['scripts']);
   gulp.watch(settings.src('styles/**/*.less'), ['styles']);
   gulp.watch(settings.src('index.html'), ['html']);
 });

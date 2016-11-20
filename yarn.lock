@@ -2671,6 +2671,15 @@ gulp-nodemon@^2.2.1:
     gulp "^3.9.1"
     nodemon "^1.10.2"
 
+gulp-pug@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/gulp-pug/-/gulp-pug-3.1.0.tgz#e51eae693aee5eea0ba288f4a5924079ac37a7a0"
+  dependencies:
+    gulp-util "^3.0.2"
+    object-assign "^4.1.0"
+    pug ">=2.0.0-alpha <3"
+    through2 "^2.0.0"
+
 gulp-rename@^1.2.0, gulp-rename@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/gulp-rename/-/gulp-rename-1.2.2.tgz#3ad4428763f05e2764dec1c67d868db275687817"
@@ -2713,7 +2722,7 @@ gulp-uglify@^2.0.0:
     uglify-save-license "^0.4.1"
     vinyl-sourcemaps-apply "^0.2.0"
 
-gulp-util@*, gulp-util@^3.0.0, gulp-util@^3.0.1, gulp-util@^3.0.5, gulp-util@^3.0.7:
+gulp-util@*, gulp-util@^3.0.0, gulp-util@^3.0.1, gulp-util@^3.0.2, gulp-util@^3.0.5, gulp-util@^3.0.7:
   version "3.0.7"
   resolved "https://registry.yarnpkg.com/gulp-util/-/gulp-util-3.0.7.tgz#78925c4b8f8b49005ac01a011c557e6218941cbb"
   dependencies:
@@ -4695,7 +4704,7 @@ pug-walk@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/pug-walk/-/pug-walk-1.0.0.tgz#7f4ae1456a4f18feee40a0d708b75c1c51d2e4e4"
 
-pug@2.0.0-beta6:
+"pug@>=2.0.0-alpha <3", pug@2.0.0-beta6:
   version "2.0.0-beta6"
   resolved "https://registry.yarnpkg.com/pug/-/pug-2.0.0-beta6.tgz#9ead2e59e540a467efc3787ccb03e4574ba5fae9"
   dependencies:
