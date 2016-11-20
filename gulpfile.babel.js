@@ -157,7 +157,7 @@ gulp.task('html', () => {
  */
 gulp.task('assets', () => {
   return gulp.src(settings.src('assets/**/*'))
-    .pipe(image({
+    .pipe(gulpif(settings.ENV === 'production', image({
       pngquant: true,
       optipng: false,
       zopflipng: true,
@@ -167,9 +167,8 @@ gulp.task('assets', () => {
       gifsicle: true,
       svgo: true,
       concurrent: 10
-    }))
-    .pipe(gulpif(settings.ENV !== 'production', gulp.dest(settings.src('assets'))))
-    .pipe(gulpif(settings.ENV === 'production', gulp.dest(settings.dest('assets'))));
+    })))
+    .pipe(gulp.dest(settings.dest('assets')));
 });
 
 /**
@@ -218,13 +217,7 @@ gulp.task('server', ['build', 'nodemon'], (cb) => {
  * Minifies scripts, styles and assets
  */
 gulp.task('build', (done) => {
-  var tasks = ['scripts', 'styles', 'html'];
-
-  if (settings.ENV === 'production') {
-    tasks.push('assets');
-  }
-
-  return sequence(tasks, done);
+  return sequence(['scripts', 'styles', 'html', 'assets'], done);
 });
 
 /**
