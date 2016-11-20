@@ -7,11 +7,7 @@
     global.Helper = factory();
   }
 })(this, function () {
-  var Helper = {
-
-    test: true
-
-  };
+  var Helper = {};
 
   return Helper;
 });

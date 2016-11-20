@@ -39,6 +39,7 @@ const settings = {
   }
 };
 
+const reload = browserSync.reload;
 const lessAutoprefixPlugin = new LessAutoprefixPlugin({
   browsers: '> 1%'
 });
@@ -80,7 +81,7 @@ gulp.task('scripts', () => {
     )
     .pipe(gulpif(settings.ENV !== 'production', sourcemaps.write('./')))
     .pipe(gulp.dest(settings.dest('js')))
-    .pipe(browserSync.reload({
+    .pipe(reload({
       stream: true
     }));
 });
@@ -117,7 +118,7 @@ gulp.task('styles', () => {
     .pipe(rename('bundle.css'))
     .pipe(gulpif(settings.ENV !== 'production', sourcemaps.write('./')))
     .pipe(gulp.dest(settings.dest('css')))
-    .pipe(browserSync.reload({
+    .pipe(reload({
       stream: true
     }));
 });
@@ -130,7 +131,7 @@ gulp.task('styles', () => {
 gulp.task('html', () => {
   return gulp.src(settings.src('index.html'))
     .pipe(gulp.dest(settings.BUILD_DIR))
-    .pipe(browserSync.reload({
+    .pipe(reload({
       stream: true
     }));
 });
@@ -175,13 +176,6 @@ gulp.task('nodemon', (cb) => {
         called = true;
         cb();
       }
-    })
-    .on('restart', () => {
-      setTimeout(() => {
-        browserSync.reload({
-          stream: false
-        });
-      }, 500);
     });
 });
 
@@ -213,7 +207,13 @@ gulp.task('server', ['build', 'nodemon'], (cb) => {
  * Minifies scripts, styles and assets
  */
 gulp.task('build', (done) => {
-  return sequence('scripts', 'styles', 'html', 'assets', done);
+  var tasks = ['scripts', 'styles', 'html'];
+
+  if (settings.ENV === 'production') {
+    tasks.push('assets');
+  }
+
+  return sequence(tasks, done);
 });
 
 /**
