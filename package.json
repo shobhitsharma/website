@@ -15,7 +15,7 @@
     "clean": "rimraf dist/{css/*,js/*,images/*}",
     "develop": "npm install && gulp",
     "git:pull": "git config --global pull.default current && git pull --rebase",
-    "build": "NODE_ENV=production npm run git:pull && gulp build"
+    "build": "npm run git:pull && npm install && NODE_ENV=production gulp build"
   },
   "dependencies": {
     "async": "^2.1.2",
