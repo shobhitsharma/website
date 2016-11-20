@@ -1,10 +1,11 @@
-# shobh.it
+# shobh.it Source
 
 ### Development
 
 To get started and setup for development environment:
 
 ```shell
+$ cp .env-sample .env # Modify configuration
 $ npm start # Install basic dependencies and express starter
 $ npm run develop # UI Development and Browserify instance
 ```

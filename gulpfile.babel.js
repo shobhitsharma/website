@@ -49,16 +49,7 @@ function onError(err) {
   process.exit(1);
 }
 
-/**
- * $ gulp clean
- *
- * Cleans up previous `dist` directory
- */
-gulp.task('clean', function (done) {
-  del(['dist'], done);
-});
-
-gulp.task('scripts', function (done) {
+gulp.task('scripts', () => {
   let bundler = browserify({
     entries: settings.src('app/index.js'),
     debug: true,
@@ -96,7 +87,7 @@ gulp.task('scripts', function (done) {
 /*
  $ gulp styles
  */
-gulp.task('styles', function () {
+gulp.task('styles', () => {
   var browsers = [
     'Android >= 2.3',
     'Chrome >= 20',
@@ -135,7 +126,7 @@ gulp.task('styles', function () {
  *
  * Interpolates index
  */
-gulp.task('html', function () {
+gulp.task('html', () => {
   return gulp.src(settings.src('index.html'))
     .pipe(gulp.dest(settings.BUILD_DIR))
     .pipe(browserSync.reload({
@@ -148,7 +139,7 @@ gulp.task('html', function () {
  *
  * Optimize and manipulate assets
  */
-gulp.task('assets', function () {
+gulp.task('assets', () => {
   // TODO: Optimize svg and images here
   return gulp.src(settings.src('assets/**/*'))
     .pipe(gulp.dest(settings.dest('assets')));
@@ -159,7 +150,7 @@ gulp.task('assets', function () {
  *
  * Start node server and watches backend
  */
-gulp.task('nodemon', function (cb) {
+gulp.task('nodemon',  (cb) => {
   var called = false;
   return nodemon({
       script: 'bin/www',
@@ -168,14 +159,14 @@ gulp.task('nodemon', function (cb) {
         'node_modules/'
       ]
     })
-    .on('start', function () {
+    .on('start', () => {
       if (!called) {
         called = true;
         cb();
       }
     })
-    .on('restart', function () {
-      setTimeout(function () {
+    .on('restart', () => {
+      setTimeout(() => {
         browserSync.reload({
           stream: false
         });
@@ -188,7 +179,7 @@ gulp.task('nodemon', function (cb) {
  *
  * Start webserver and activate watchers
  */
-gulp.task('server', ['build', 'nodemon'], function (cb) {
+gulp.task('server', ['build', 'nodemon'], (cb) => {
   browserSync({
     port: settings.PORT,
     server: {
@@ -210,7 +201,7 @@ gulp.task('server', ['build', 'nodemon'], function (cb) {
  *
  * Minifies scripts, styles and assets
  */
-gulp.task('build', function (done) {
+gulp.task('build', (done) => {
   return sequence('scripts', 'styles', 'html', 'assets', done);
 });
 
