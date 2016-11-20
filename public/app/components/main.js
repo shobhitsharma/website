@@ -1,7 +1,7 @@
 import Backbone from 'backbone';
 
-import SidebarView from './sidebar/sidebar.js';
-import ContainerView from './container/main.js';
+import SidebarView from './sidebar.js';
+import ContentView from './content.js';
 
 export default class MainView extends Backbone.View {
 
@@ -16,20 +16,19 @@ export default class MainView extends Backbone.View {
   }
 
   render() {
-    this.$el.empty().append(`
-      <div class="sidebar"></div>
-      <div class="container"></div>
-    `);
+    this.$el.empty();
 
-    this.sidebarView = new SidebarView({
-      el: this.$('.sidebar'),
-      model: this.model
-    }).render();
+    this.$el.append(
+      new SidebarView({
+        model: this.model
+      }).render().el
+    );
 
-    this.containerView = new ContainerView({
-      el: this.$('.container'),
-      model: this.model
-    }).render();
+    this.$el.append(
+      new ContentView({
+        model: this.model
+      }).render().el
+    );
 
     return this;
   }

@@ -1,8 +1,9 @@
+import $ from 'jquery';
 import Backbone from 'backbone';
 
-import ProjectsView from './projects/projects.js';
-import BlogView from './blog/blog.js';
-import ErrorView from './error/error.js';
+import ProjectsView from './projects.js';
+import BlogView from './blog.js';
+import ErrorView from './error.js';
 
 export default class ContainerView extends Backbone.View {
 

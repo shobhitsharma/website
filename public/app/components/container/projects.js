@@ -1,7 +1,6 @@
 import $ from 'jquery';
 import Backbone from 'backbone';
-import Template from './projects.hbs';
-import Repos from '../../../data/repos.json';
+import Repos from '../../data/repos.json';
 
 class RepoView extends Backbone.View {
 
@@ -49,8 +48,12 @@ export default class ProjectsView extends Backbone.View {
     this.listenTo(this.model, 'change', this.render);
   }
 
+  template () {
+    return `<div class="repos"></div>`;
+  }
+
   render() {
-    this.$el.empty().append(Template(this.model.toJSON()));
+    this.$el.empty().append(this.template(this.model.toJSON()));
     const $list = this.$('.repos');
 
     Repos.forEach((repo) => {

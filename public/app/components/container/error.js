@@ -1,5 +1,4 @@
 import Backbone from 'backbone';
-import Template from './error.hbs';
 
 export default class ErrorView extends Backbone.View {
 
@@ -13,8 +12,12 @@ export default class ErrorView extends Backbone.View {
     this.listenTo(this.model, 'change', this.render);
   }
 
+  template () {
+    return `<div class="container">404 NOT FOUND</div>`;
+  }
+
   render() {
-    this.$el.empty().append(Template(this.model.toJSON()));
+    this.$el.empty().append(this.template(this.model.toJSON()));
 
     return this;
   }

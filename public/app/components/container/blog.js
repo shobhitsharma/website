@@ -1,5 +1,4 @@
 import Backbone from 'backbone';
-import Template from './blog.hbs';
 
 class BlogPreview extends Backbone.View {
 
@@ -17,8 +16,12 @@ export default class BlogView extends Backbone.View {
     this.listenTo(this.model, 'change', this.render);
   }
 
+  template () {
+    return `<div class="container">Blog View</div>`;
+  }
+
   render() {
-    this.$el.empty().append(Template(this.model.toJSON()));
+    this.$el.empty().append(this.template(this.model.toJSON()));
 
     return this;
   }

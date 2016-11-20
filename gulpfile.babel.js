@@ -9,7 +9,6 @@ import gulpif from 'gulp-if';
 import sourcemaps from 'gulp-sourcemaps';
 import browserify from 'browserify';
 import babelify from 'babelify';
-import hbsfy from 'hbsfy';
 import source from 'vinyl-source-stream';
 import buffer from 'vinyl-buffer';
 import gutil from 'gulp-util';
@@ -28,7 +27,7 @@ dotenv.config();
 
 const settings = {
   ENV: process.env.NODE_ENV || 'development', // NODE_ENV
-  PORT: process.env.DEV_PORT || 3001, // Development server port
+  PORT: parseInt(process.env.DEV_PORT || 3001), // Development server port
   SRC_DIR: 'public/', // Relative paths to sources and output directories
   BUILD_DIR: process.env.BUILD || 'dist/',
   src: function (path) {
@@ -51,11 +50,15 @@ function onError(err) {
   process.exit(1);
 }
 
+/*
+ * $ gulp scripts
+ *
+ * Uses browserify to minify files
+ */
 gulp.task('scripts', () => {
   let bundler = browserify({
     entries: settings.src('app/index.js'),
-    debug: true,
-    transform: [hbsfy]
+    debug: true
   });
 
   return bundler
@@ -87,7 +90,9 @@ gulp.task('scripts', () => {
 });
 
 /*
- $ gulp styles
+ * $ gulp styles
+ *
+ * Managing less, autoprefixers and css cleanup
  */
 gulp.task('styles', () => {
   var browsers = [
@@ -190,13 +195,9 @@ gulp.task('server', ['build', 'nodemon'], (cb) => {
     server: {
       baseDir: settings.BUILD_DIR,
       middleware: [history()]
-    },
-    watchOptions: {
-      ignoreInitial: true,
-      ignored: '*.txt'
     }
   });
-  gulp.watch([settings.src('app/**/*.js'), settings.src('app/**/*.hbs')], ['scripts']);
+  gulp.watch(settings.src('app/**/*.js'), ['scripts']);
   gulp.watch(settings.src('styles/**/*.less'), ['styles']);
   gulp.watch(settings.src('index.html'), ['html']);
 });

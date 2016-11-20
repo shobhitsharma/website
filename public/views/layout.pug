@@ -1,0 +1,45 @@
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge,chrome=1")
+    title= title
+    meta(name="description", content=description)
+    meta(name="viewport", content="width=device-width, initial-scale=1, maximum-scale=1")
+    meta(name='apple-mobile-web-app-title', content=title)
+    meta(property="og:site_name", content=title)
+    meta(property="og:type", content="website")
+    meta(property="og:image", content=url + '/images/logo.png')
+    meta(property="og:description", content=description)
+    meta(property="og:title", content=title)
+    meta(property="og:url", content=url)
+    link(rel="stylesheet" href="//fonts.googleapis.com/css?family=Rubik:400,500")
+    link(rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons")
+    link(rel="stylesheet" href="//cdn.jsdelivr.net/devicons/1.8.0/css/devicons.min.css")
+    link(rel="stylesheet" type="text/css" href="css/bundle.css")
+    body
+      block content
+if !error
+  <!--[if lt IE 7]>
+  <script src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/css3polyfill/1.0.0/css3polyfill.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/g/html5shiv@3.7.3(html5shiv-printshiv.min.js),ie7.js@2.1b4"></script>
+  <![endif]-->
+  <!--[if lt IE 8]>
+  <script src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/css3polyfill/1.0.0/css3polyfill.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/g/html5shiv@3.7.3(html5shiv-printshiv.min.js),ie7.js@2.1b4(IE8.js)"></script>
+  <script src="/js/plugins/polyfills.ie.js"></script>
+  <![endif]-->
+  <!--[if lte IE 9]>
+  <script src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/css3polyfill/1.0.0/css3polyfill.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/g/html5shiv@3.7.3(html5shiv-printshiv.min.js),ie7.js@2.1b4(IE9.js)"></script>
+  <script src="/js/plugins/polyfills.ie.js"></script>
+  <![endif]-->
+  script.
+    window.SHOBHIT = {};
+  script(type='text/javascript' src='/js/bundle.js')

@@ -13,14 +13,14 @@ require('dotenv').config();
 
 var app = require('../server.js');
 var package_json = require('../package.json');
-var debug = require('debug')('cf-brandbeat:server');
+var debug = require('debug')('website:server');
 var http = require('http');
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || 3000);
 
 /**
  * Setting up port.
