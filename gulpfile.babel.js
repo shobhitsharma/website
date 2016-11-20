@@ -14,6 +14,7 @@ import buffer from 'vinyl-buffer';
 import gutil from 'gulp-util';
 import uglify from 'gulp-uglify';
 import less from 'gulp-less';
+import gzip from 'gulp-gzip';
 import image from 'gulp-image';
 import rename from 'gulp-rename';
 import nodemon from 'gulp-nodemon';
@@ -83,6 +84,7 @@ gulp.task('scripts', () => {
       }))
     )
     .pipe(gulpif(settings.ENV !== 'production', sourcemaps.write('./')))
+    .pipe(gulpif(settings.ENV === 'production', gzip()))
     .pipe(gulp.dest(settings.dest('js')))
     .pipe(reload({
       stream: true
@@ -122,6 +124,7 @@ gulp.task('styles', () => {
     }).on('error', onError))
     .pipe(rename('bundle.css'))
     .pipe(gulpif(settings.ENV !== 'production', sourcemaps.write('./')))
+    .pipe(gulpif(settings.ENV === 'production', gzip()))
     .pipe(gulp.dest(settings.dest('css')))
     .pipe(reload({
       stream: true
@@ -159,7 +162,8 @@ gulp.task('assets', () => {
       svgo: true,
       concurrent: 10
     }))
-    .pipe(gulp.dest(settings.dest('assets')));
+    .pipe(gulpif(settings.ENV !== 'production', gulp.dest(settings.src('assets'))))
+    .pipe(gulpif(settings.ENV === 'production', gulp.dest(settings.dest('assets'))));
 });
 
 /**
