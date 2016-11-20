@@ -4,7 +4,6 @@ import fs from 'fs';
 import path from 'path';
 import url from 'url';
 import dotenv from 'dotenv';
-import del from 'del';
 import gulp from 'gulp';
 import gulpif from 'gulp-if';
 import sourcemaps from 'gulp-sourcemaps';
@@ -17,7 +16,7 @@ import gutil from 'gulp-util';
 import uglify from 'gulp-uglify';
 import less from 'gulp-less';
 import rename from 'gulp-rename';
-import shell from 'gulp-shell';
+import nodemon from 'gulp-nodemon';
 import browserSync from 'browser-sync';
 import sequence from 'run-sequence';
 import history from 'connect-history-api-fallback';
@@ -28,7 +27,7 @@ dotenv.config();
 
 const settings = {
   ENV: process.env.NODE_ENV || 'development', // NODE_ENV
-  PORT: process.env.PORT || 3000, // Development server port
+  PORT: process.env.DEV_PORT || 3001, // Development server port
   SRC_DIR: 'public/', // Relative paths to sources and output directories
   BUILD_DIR: process.env.BUILD || 'dist/',
   src: function (path) {
@@ -50,8 +49,10 @@ function onError(err) {
   process.exit(1);
 }
 
-/*
- $ gulp clean
+/**
+ * $ gulp clean
+ *
+ * Cleans up previous `dist` directory
  */
 gulp.task('clean', function (done) {
   del(['dist'], done);
@@ -129,12 +130,11 @@ gulp.task('styles', function () {
     }));
 });
 
-gulp.task('assets', function () {
-  // TODO: Optimize svg and images here
-  return gulp.src(settings.src('assets/**/*'))
-    .pipe(gulp.dest(settings.dest('assets')));
-});
-
+/**
+ * $ gulp html
+ *
+ * Interpolates index
+ */
 gulp.task('html', function () {
   return gulp.src(settings.src('index.html'))
     .pipe(gulp.dest(settings.BUILD_DIR))
@@ -144,17 +144,43 @@ gulp.task('html', function () {
 });
 
 /**
- * $ gulp clean
+ * $ gulp assets
  *
- * Cleans up previous `dist` directory
+ * Optimize and manipulate assets
  */
-gulp.task('clean', function (done) {
-  return gulp.src('/', {
-      read: false
+gulp.task('assets', function () {
+  // TODO: Optimize svg and images here
+  return gulp.src(settings.src('assets/**/*'))
+    .pipe(gulp.dest(settings.dest('assets')));
+});
+
+/**
+ * $ gulp nodemon
+ *
+ * Start node server and watches backend
+ */
+gulp.task('nodemon', function (cb) {
+  var called = false;
+  return nodemon({
+      script: 'bin/www',
+      ignore: [
+        'gulpfile.babel.js',
+        'node_modules/'
+      ]
     })
-    .pipe(shell([
-      'rm -rf dist/'
-    ], done));
+    .on('start', function () {
+      if (!called) {
+        called = true;
+        cb();
+      }
+    })
+    .on('restart', function () {
+      setTimeout(function () {
+        browserSync.reload({
+          stream: false
+        });
+      }, 500);
+    });
 });
 
 /**
@@ -162,15 +188,18 @@ gulp.task('clean', function (done) {
  *
  * Start webserver and activate watchers
  */
-gulp.task('server', ['build'], function () {
+gulp.task('server', ['build', 'nodemon'], function (cb) {
   browserSync({
     port: settings.PORT,
     server: {
       baseDir: settings.BUILD_DIR,
       middleware: [history()]
+    },
+    watchOptions: {
+      ignoreInitial: true,
+      ignored: '*.txt'
     }
   });
-
   gulp.watch([settings.src('app/**/*.js'), settings.src('app/**/*.hbs')], ['scripts']);
   gulp.watch(settings.src('styles/**/*.less'), ['styles']);
   gulp.watch(settings.src('index.html'), ['html']);
@@ -182,7 +211,7 @@ gulp.task('server', ['build'], function () {
  * Minifies scripts, styles and assets
  */
 gulp.task('build', function (done) {
-  return sequence('clean', 'scripts', 'styles', 'assets', 'html', done);
+  return sequence('scripts', 'styles', 'html', 'assets', done);
 });
 
 /**

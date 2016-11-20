@@ -14,8 +14,8 @@
     "start": "node ./bin/www",
     "clean": "rimraf dist/{css/*,js/*,images/*}",
     "develop": "npm install && gulp",
-    "build": "NODE_ENV=production gulp build",
-    "git": "git config --global pull.default current && git pull --rebase"
+    "git:pull": "git config --global pull.default current && git pull --rebase",
+    "build": "NODE_ENV=production npm run git:pull && gulp build"
   },
   "dependencies": {
     "async": "^2.1.2",
@@ -35,8 +35,8 @@
     "mongodb": "2.2.11",
     "morgan": "^1.7.0",
     "multer": "^1.2.0",
-    "q": "1.4.1",
-    "request": "2.78.0",
+    "q": "^1.4.1",
+    "request": "^2.78.0",
     "serve-favicon": "^2.3.2",
     "underscore": "^1.8.3"
   },
@@ -50,13 +50,12 @@
     "browserify": "^13.1.1",
     "chai": "3.5.0",
     "connect-history-api-fallback": "^1.3.0",
-    "del": "^2.2.2",
     "gulp": "^3.9.1",
     "gulp-if": "^2.0.2",
     "gulp-less": "^3.3.0",
     "gulp-minify-css": "^1.2.4",
+    "gulp-nodemon": "^2.2.1",
     "gulp-rename": "^1.2.2",
-    "gulp-shell": "^0.5.2",
     "gulp-sourcemaps": "^2.2.0",
     "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.7",
