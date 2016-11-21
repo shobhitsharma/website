@@ -11,8 +11,6 @@ export default class MainView extends Backbone.View {
 
   constructor(options) {
     super(options);
-
-    this.listenTo(this.model, 'change', this.render);
   }
 
   render() {

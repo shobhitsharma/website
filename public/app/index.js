@@ -7,12 +7,11 @@ import Controller from './controller';
 import MainView from './components/main.js';
 
 $(() => {
-  console.debug('Shobhit Sharma UI Initialized', Helper);
+  console.debug('Shobhit Sharma UI Initialized', Controller);
   const router = new Router();
-  const controller = new Controller();
 
   const view = new MainView({
-    model: controller
+    model: Controller
   });
 
   $('#application').empty().append(view.render().$el);

@@ -8,8 +8,6 @@ export default class ErrorView extends Backbone.View {
 
   constructor(options) {
     super(options);
-
-    this.listenTo(this.model, 'change', this.render);
   }
 
   template () {
@@ -17,7 +15,7 @@ export default class ErrorView extends Backbone.View {
   }
 
   render() {
-    this.$el.empty().append(this.template(this.model.toJSON()));
+    this.$el.empty().append(this.template());
 
     return this;
   }

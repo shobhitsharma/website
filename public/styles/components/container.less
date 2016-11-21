@@ -19,12 +19,25 @@
       padding: 3%;
       margin: 0 auto;
 
-      .repos {
+      .content-item {
+        margin: 20% 0;
+        min-width: 640px;
+
+        > .title {
+          font-weight: 400;
+          color: fade(@color, 80%);
+          font-size: 1.2em;
+          text-transform: uppercase;
+          margin-bottom: 3%;
+        }
+      }
+
+      .repos, .posts {
         position: relative;
         font-size: 1.3em;
         line-height: 1.3;
 
-        .repo-info {
+        .item {
           display: block;
           padding: 2% 0;
           margin: 1% 0;
@@ -48,6 +61,18 @@
                 font-size: 1.2em;
               }
             }
+          }
+        }
+
+        > a.button {
+          border: 1px solid @border-color;
+          padding: 2% 4%;
+          display: inline-block;
+          margin: 3% auto;
+          float: right;
+
+          &:hover {
+            background-color: @lite-color;
           }
         }
       }

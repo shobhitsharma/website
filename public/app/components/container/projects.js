@@ -1,6 +1,5 @@
-import $ from 'jquery';
 import Backbone from 'backbone';
-import Repos from '../../data/repos.json';
+import ReposModel from '../../models/repos.js';
 
 class RepoView extends Backbone.View {
 
@@ -17,7 +16,7 @@ class RepoView extends Backbone.View {
     let language = (this.model.get('language') || 'default').toLowerCase();
 
     this.$el.empty().append(`
-      <a class="repo-info" href="` + this.model.get('html_url') + `" target="_blank">
+      <a class="item" href="` + this.model.get('html_url') + `" target="_blank">
         <div class="details">
           <h2 class="name">` + this.model.get('name') + `</h2>
           <h4 class="description">` + this.model.get('description') + `</h4>
@@ -32,10 +31,6 @@ class RepoView extends Backbone.View {
   }
 }
 
-class RepoPreview extends Backbone.View {
-
-}
-
 export default class ProjectsView extends Backbone.View {
 
   get className() {
@@ -45,26 +40,52 @@ export default class ProjectsView extends Backbone.View {
   constructor(options) {
     super(options);
 
-    this.listenTo(this.model, 'change', this.render);
+    this.model = new ReposModel();
+
+    this.model.on('change', this.build, this);
   }
 
-  template () {
-    return `<div class="repos"></div>`;
+  template() {
+    return `<div class="content-item">
+      <h2 class="title">Projects</h2>
+      <div class="repos"></div>
+    </div>`;
   }
 
-  render() {
-    this.$el.empty().append(this.template(this.model.toJSON()));
-    const $list = this.$('.repos');
+  render(teaser) {
+    this.$el.empty().append(this.template());
 
-    Repos.forEach((repo) => {
-      let repoView = new RepoView({
-        model: new Backbone.Model(repo)
-      });
+    this.teaser = !!teaser;
 
-      $list.append(repoView.render().el);
-    });
+    this.build();
 
     return this;
+  }
+
+  build() {
+    console.debug('container', 'projects', this.model);
+    const $list = this.$('.repos');
+    const repositories = this.model.attributes || [];
+
+    if (this.teaser) {
+      repositories.teaser.forEach((repo, index) => {
+        let repoView = new RepoView({
+          model: new Backbone.Model(repo)
+        });
+
+        $list.append(repoView.render().el);
+      });
+
+      $list.append('<a class="button" href="/projects">View Projects</a>');
+    } else {
+      repositories.all.forEach((repo) => {
+        let repoView = new RepoView({
+          model: new Backbone.Model(repo)
+        });
+
+        $list.append(repoView.render().el);
+      });
+    }
   }
 
 }

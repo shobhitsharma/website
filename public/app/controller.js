@@ -1,13 +1,14 @@
 import Backbone from 'backbone';
 
-export default class Controller extends Backbone.Model {
+export class Controller extends Backbone.Model {
 
   get defaults() {
     return {
-      state: 'default',
-      sidebar: 'default',
-      content: 'default'
+      sidebar: null,
+      content: null
     };
   }
 
 }
+
+export default new Controller();

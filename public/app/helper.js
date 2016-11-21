@@ -7,7 +7,7 @@
     global.Helper = factory();
   }
 })(this, function () {
-  var Helper = {};
+  const Helper = {};
 
   return Helper;
 });

@@ -30,7 +30,7 @@
     "express": "^4.14.0",
     "handlebars": "^4.0.6",
     "jquery": "^3.1.1",
-    "medium-sdk": "0.0.4",
+    "medium-sdk": "^0.0.4",
     "mongodb": "2.2.11",
     "morgan": "^1.7.0",
     "multer": "^1.2.0",

@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import Backbone from 'backbone';
 
 import ProjectsView from './projects.js';
@@ -9,19 +8,35 @@ export default class ContainerView extends Backbone.View {
 
   constructor(options) {
     super(options);
-
-    this.listenTo(this.model, 'change', this.render);
   }
 
   render() {
     this.$el.empty().append(`<div class="content"></div>`);
 
-    this.view = new ProjectsView({
-      el: this.$('.content'),
-      model: this.model
-    }).render();
+    this.build();
 
     return this;
+  }
+
+  build() {
+    console.debug('container', 'main', this.model);
+    const view = this.model.get('content');
+
+    this.views = {
+      projects: new ProjectsView(),
+      blog: new BlogView()
+    };
+
+    this.$('.content').empty();
+
+    if (this.views[view]) {
+      this.$('.content').append(this.views[view].render().el);
+    } else if (view === 'default') {
+      this.$('.content').append(this.views.projects.render(true).el);
+      this.$('.content').append(this.views.blog.render(true).el);
+    } else {
+      this.$('.content').append(new ErrorView().render().el);
+    }
   }
 
 }

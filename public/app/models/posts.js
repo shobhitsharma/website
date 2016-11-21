@@ -6,4 +6,14 @@ export default class PostsModel extends Backbone.Model {
     return {};
   }
 
+  get url() {
+    return '/api/1/posts';
+  }
+
+  parse(data) {
+    data = data || {};
+
+    return data.Post || {};
+  }
+
 }

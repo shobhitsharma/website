@@ -11,17 +11,21 @@ export default class ContentView extends Backbone.View {
   constructor(options) {
     super(options);
 
-    this.listenTo(this.model, 'change', this.render);
+    this.model.on('change:content', this.build, this);
   }
 
   render() {
-    this.$el.empty().append(
+    this.$el.empty();
+
+    return this;
+  }
+
+  build() {
+    this.$el.append(
       new ContainerView({
         model: this.model
       }).render().el
     );
-
-    return this;
   }
 
 }

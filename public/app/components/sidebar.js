@@ -11,10 +11,10 @@ export default class SidebarView extends Backbone.View {
   constructor(options) {
     super(options);
 
-    this.listenTo(this.model, 'change', this.render);
+    this.listenTo(this.model, 'change:sidebar', this.render);
   }
 
-  template () {
+  template() {
     let locale = window.navigator.language || 'en-US';
     locale = locale.split('-');
     let hello = locale.length ? Hello[(locale[1] || 'us').toUpperCase()] : Hello.US;
@@ -25,7 +25,7 @@ export default class SidebarView extends Backbone.View {
           <img class="image" src="/assets/shobhit.png"/>
         </div>
         <div class="info">
-          <h1 class="name">`+ hello +`.<br/>I'm Shobhit.</h1>
+          <h1 class="name">` + hello + `.<br/>I'm Shobhit.</h1>
           <h4 class="description">I write code. I play guitar. I wander avidly.</h4>
         </div>
         <div class="dev-badges">
