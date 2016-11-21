@@ -13,13 +13,11 @@ class PostView extends Backbone.View {
   }
 
   render() {
-    let description = (this.model.get('content') || {}).subtitle;
-
     this.$el.empty().append(`
-      <a class="item" href="https://medium.com/@sh0bhit/` + this.model.get('uniqueSlug') + `" target="_blank">
+      <a class="item" href="` + this.model.get('link') + `" target="_blank">
         <div class="details">
           <h2 class="name">` + this.model.get('title') + `</h2>
-          <h4 class="description">` + description + `</h4>
+          <h4 class="description">` + this.model.get('excerpt') + `</h4>
         </div>
       </a>
     `);
@@ -62,7 +60,7 @@ export default class BlogView extends Backbone.View {
   build() {
     console.debug('container', 'blog', this.model);
     const $list = this.$('.posts');
-    const posts = this.model.attributes || [];
+    const posts = this.model.attributes || {};
 
     if (this.teaser) {
       Object.keys(posts).forEach((post, index) => {

@@ -20,22 +20,30 @@
       margin: 0 auto;
 
       .content-item {
-        margin: 20% 0;
-        min-width: 640px;
+        display: block;
+        margin: 10% 0;
+        width: 100%;
+        max-width: 640px;
+        overflow: hidden;
 
         > .title {
           font-weight: 400;
           color: fade(@color, 80%);
           font-size: 1.2em;
           text-transform: uppercase;
-          margin-bottom: 3%;
+          padding: 2%;
+          margin-bottom: 1%;
         }
       }
 
       .repos, .posts {
         position: relative;
+        display: block;
         font-size: 1.3em;
         line-height: 1.3;
+        padding: 2%;
+        min-width: 640px;
+        width: 100%;
 
         .item {
           display: block;

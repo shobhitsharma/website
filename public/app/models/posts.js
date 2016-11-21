@@ -11,9 +11,7 @@ export default class PostsModel extends Backbone.Model {
   }
 
   parse(data) {
-    data = data || {};
-
-    return data.Post || {};
+    return data || [];
   }
 
 }
