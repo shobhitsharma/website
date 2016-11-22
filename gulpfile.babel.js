@@ -18,7 +18,6 @@ import pug from 'gulp-pug';
 import image from 'gulp-image';
 import rename from 'gulp-rename';
 import nodemon from 'gulp-nodemon';
-import manifest from 'gulp-manifest';
 import browserSync from 'browser-sync';
 import sequence from 'run-sequence';
 import history from 'connect-history-api-fallback';
@@ -195,26 +194,6 @@ gulp.task('nodemon', (cb) => {
 });
 
 /**
- * $ gulp manifest
- *
- * Adds HTML5 App Cache
- */
-
-gulp.task('manifest', function () {
-  gulp.src([settings.BUILD_DIR], {
-      base: './'
-    })
-    .pipe(manifest({
-      hash: true,
-      preferOnline: true,
-      network: ['*'],
-      filename: 'app.manifest',
-      exclude: 'app.manifest'
-    }))
-    .pipe(gulp.dest(settings.BUILD_DIR));
-});
-
-/**
  * $ gulp server
  *
  * Start webserver and activate watchers
@@ -238,7 +217,7 @@ gulp.task('server', ['build', 'nodemon'], (cb) => {
  * Minifies scripts, styles and assets
  */
 gulp.task('build', (done) => {
-  return sequence(['scripts', 'styles', 'html', 'assets', 'manifest'], done);
+  return sequence(['scripts', 'styles', 'html', 'assets'], done);
 });
 
 /**
