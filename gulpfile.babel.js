@@ -4,6 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import url from 'url';
 import dotenv from 'dotenv';
+import packagejson from './package.json';
 import gulp from 'gulp';
 import gulpif from 'gulp-if';
 import sourcemaps from 'gulp-sourcemaps';
@@ -18,6 +19,7 @@ import pug from 'gulp-pug';
 import image from 'gulp-image';
 import rename from 'gulp-rename';
 import nodemon from 'gulp-nodemon';
+import swprecache from 'sw-precache';
 import browserSync from 'browser-sync';
 import sequence from 'run-sequence';
 import history from 'connect-history-api-fallback';
@@ -194,6 +196,36 @@ gulp.task('nodemon', (cb) => {
 });
 
 /**
+ * $ gulp service-worker
+ */
+gulp.task('service-worker', function (done) {
+  var config = {
+    cacheId: packagejson.name,
+    handleFetch: true,
+    runtimeCaching: [{
+      urlPattern: /runtime-caching/,
+      handler: 'cacheFirst',
+      options: {
+        cache: {
+          maxEntries: 1,
+          name: 'runtime-cache'
+        }
+      }
+    }],
+    staticFileGlobs: [
+      settings.BUILD_DIR + 'css/**.css',
+      settings.BUILD_DIR + '**.html',
+      settings.BUILD_DIR + 'assets/**.*',
+      settings.BUILD_DIR + 'js/**.js'
+    ],
+    stripPrefix: settings.BUILD_DIR,
+    verbose: true
+  };
+
+  swprecache.write(path.join(settings.BUILD_DIR, 'service-worker.js'), config, done);
+});
+
+/**
  * $ gulp server
  *
  * Start webserver and activate watchers
@@ -217,7 +249,7 @@ gulp.task('server', ['build', 'nodemon'], (cb) => {
  * Minifies scripts, styles and assets
  */
 gulp.task('build', (done) => {
-  return sequence(['scripts', 'styles', 'html', 'assets'], done);
+  return sequence('scripts', 'styles', 'html', 'assets', 'service-worker', done);
 });
 
 /**
