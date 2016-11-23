@@ -221,6 +221,12 @@ gulp.task('service-worker', function (done) {
       settings.BUILD_DIR + 'assets/**.*',
       settings.BUILD_DIR + 'js/**.js'
     ],
+    runtimeCaching: [{
+      urlPattern: /fonts.googleapis\.com/,
+      handler: 'fastest'
+    }, {
+      default: 'networkFirst'
+    }],
     stripPrefix: settings.BUILD_DIR,
     verbose: true
   };
