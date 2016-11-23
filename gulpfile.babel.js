@@ -211,7 +211,9 @@ gulp.task('service-worker', function (done) {
         ...glob.sync(settings.BUILD_DIR + `assets/**.*`),
         ...glob.sync(settings.BUILD_DIR + `js/**.js`),
         settings.SRC_DIR + `views/index.pug`
-      ]
+      ],
+      '/projects': [settings.SRC_DIR + `views/index.pug`],
+      '/blog': [settings.SRC_DIR + `views/index.pug`]
     },
     staticFileGlobs: [
       settings.BUILD_DIR + 'css/**.css',
