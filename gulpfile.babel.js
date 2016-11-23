@@ -6,6 +6,7 @@ import url from 'url';
 import dotenv from 'dotenv';
 import packagejson from './package.json';
 import gulp from 'gulp';
+import glob from 'glob';
 import gulpif from 'gulp-if';
 import sourcemaps from 'gulp-sourcemaps';
 import browserify from 'browserify';
@@ -201,17 +202,17 @@ gulp.task('nodemon', (cb) => {
 gulp.task('service-worker', function (done) {
   var config = {
     cacheId: packagejson.name,
+    logger: gutil.log,
     handleFetch: true,
-    runtimeCaching: [{
-      urlPattern: /runtime-caching/,
-      handler: 'cacheFirst',
-      options: {
-        cache: {
-          maxEntries: 1,
-          name: 'runtime-cache'
-        }
-      }
-    }],
+    dynamicUrlToDependencies: {
+      '/shell': [
+        ...glob.sync(settings.BUILD_DIR + `css/**.css`),
+        ...glob.sync(settings.BUILD_DIR + `**.html`),
+        ...glob.sync(settings.BUILD_DIR + `assets/**.*`),
+        ...glob.sync(settings.BUILD_DIR + `js/**.js`),
+        settings.SRC_DIR + `views/index.pug`
+      ]
+    },
     staticFileGlobs: [
       settings.BUILD_DIR + 'css/**.css',
       settings.BUILD_DIR + '**.html',
